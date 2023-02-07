@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+{% load static %}
+{% load shop_tags %}
+
+<head>
+    <meta charset="utf-8">
+    <title>copkin - faite vos achat en ligne</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="online en ligne vente et achat" name="keywords">
+    <meta content="copkin - votre site de commande en ligne en toute securite" name="description">
+
+    <!-- Favicon -->
+    <link href="{%  static 'img/logo.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+        <div class="row bg-secondary py-2 px-xl-5">
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="d-inline-flex align-items-center">
+                    suivez nous sur les reseaux sociaux
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="https://web.facebook.com/copkin2021">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="https://wa.me/243850411990">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center py-3 px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a href="" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">Cop</span>kin</h1>
+                </a>
+            </div>
+            <div class="col-lg-9 col-12 text-left">
+                <form action="">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="faites une recherche ici">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-transparent text-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
+                    <h6 class="m-0">Categories</h6>
+                    <i class="fa fa-angle-down text-dark"></i>
+                </a>
+                <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
+                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                        {% for c in categories %}
+                            <a href="{{  c.get_absolute_url }}" class="nav-item nav-link">{{ c.nom }}</a>
+                        {% endfor %}
+                    </div>
+                </nav>
+            </div>
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none w-50">
+                        <img class="m-0 display-5" style="width:100px" src="{% static 'img/logo.png' %}" alt="copkin">
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="{% url 'shop_app:home_shop' %}" class="nav-item nav-link active">Accueil</a>
+                            <a href="{% url 'shop_app:shopping_shop' %}" class="nav-item nav-link">Nos produits</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Par categorie</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="{% url 'shop_app:categorie_shop' 'categorie1' %}" class="dropdown-item">categorie1</a>
+                                    <a href="{% url 'shop_app:categorie_shop' 'categorie2' %}" class="dropdown-item">categorie2</a>
+                                    <a href="{% url 'shop_app:categorie_shop' 'categorie3' %}" class="dropdown-item">categorie3</a>
+                                    <a href="{% url 'shop_app:categorie_shop' 'categorie4' %}" class="dropdown-item">categorie4</a>
+                                </div>
+                            </div>
+                            <a href="{% url 'shop_app:contact_shop' %}" class="nav-item nav-link">Nous contacter</a>
+                        </div>
+                    </div>
+                {% block carousel %}
+                </nav>
+
+                <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="height: 410px;">
+                            <img class="img-fluid" src="{%  static 'img/carousel-1.jpg' %}" alt="Image">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3 pb-1" style="max-width: 700px; background: rgba(72,98,199,0.4); border-radius: 10px">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">TEKA SOMBA NA FACILITE <br> chez </h4>
+                                    <img class="display-4" style="width: 50%" src="{% static 'img/logo.png' %}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="height: 410px;">
+                            <img class="img-fluid" src="{%  static 'img/carousel-2.jpg' %}" alt="Image">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;background: rgba(72,98,199,0.4); border-radius: 10px">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">De produit de qualite</h4>
+                                    <a href="{% url 'shop_app:shopping_shop' %}" class="btn btn-light py-2 px-3">voir produits</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-prev-icon mb-n2"></span>
+                        </div>
+                    </a>
+                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-next-icon mb-n2"></span>
+                        </div>
+                    </a>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Featured Start -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5 pb-3">
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">De produit de qualité</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Livraison partout en Rdc</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Paiment securisé</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">24/7 Support</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Featured End -->
+
+{% if categories %}
+    <!-- Categories Start -->
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+           <h2 class="section-title px-5"><span class="px-2">Categories</span></h2>
+            <p>Consulter nos differentes categories</p>
+        </div>
+        <div class="row px-xl-5 pb-3">
+{% for categorie in categories %}
+            <div class="col-lg-4 col-md-6 pb-1">
+                <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+                    <p class="text-right"></p>
+                    <a href="{{ categorie.get_absolute_url }}" class="cat-img position-relative overflow-hidden mb-3">
+                        <img class="img-fluid" src="{{ categorie.images.url }}" alt="">
+                    </a>
+                    <h5 class="font-weight-semi-bold m-0">{{ categorie.nom }}</h5>
+                </div>
+            </div>
+{% endfor %}
+        </div>
+    </div>
+    <!-- Categories End -->
+{% endif %}
+
+    <!-- Offer Start -->
+    <div class="container-fluid offer pt-5">
+        <div class="row px-xl-5">
+            <div class="col-md-6 pb-4">
+                <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
+                    <img src="{%  static 'img/offer-1.png' %}" alt="">
+                    <div class="position-relative" style="z-index: 1;">
+                        <h5 class="text-uppercase text-primary mb-3">20% off the all order</h5>
+                        <h1 class="mb-4 font-weight-semi-bold">Spring Collection</h1>
+                        <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 pb-4">
+                <div class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-5 px-5">
+                    <img src="{%  static 'img/offer-2.png' %}" alt="">
+                    <div class="position-relative" style="z-index: 1;">
+                        <h5 class="text-uppercase text-primary mb-3">20% off the all order</h5>
+                        <h1 class="mb-4 font-weight-semi-bold">Winter Collection</h1>
+                        <a href="" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Offer End -->
+{% block main %}
+{% if categories %}
+    <!-- Products Start -->
+    {% for c in categories %}
+
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">{{ c.nom }}</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3 d-flex justify-content-center">
+            {% for article in c.article_set.all|four %}
+                <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="{{ article.image1.url }}" alt="{{ article.nom }}">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">{{ article.nom }}</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>${{ article.prix }}.00</h6><h6 class="text-muted ml-2"><del>${{ article.prix|reduction }}</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="{{ article.get_absolute_url }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>plus d'information</a>
+                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Commander</a>
+                    </div>
+                </div>
+            </div>
+            {% empty  %}
+            <div class="col-md-6 pb-4">
+                <div class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5">
+                    <img src="{%  static 'img/offer-1.png' %}" alt="">
+                    <div class="position-relative" style="z-index: 1;">
+                        <h5 class="text-uppercase text-primary mb-3"></h5>
+                        <h1 class="mb-4 font-weight-semi-bold">Nous ajouterons très bientôt de produit dans cette categorie</h1>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% if c.article_set.all.count != 0 %}
+                <div class="w-100 d-flex justify-content-center"> <a style="padding: 10px; border-radius: 5px; background: #527ed0; color: #f1d795" href="{{ c.get_absolute_url }}">voir tout nos article dans cette categorie</a> </div>
+            {% endif %}
+
+
+        </div>
+    </div>
+    {% endfor %}
+    <!-- Products End -->
+
+{% endif %}
+
+    <!-- Subscribe Start -->
+    <div class="container-fluid my-5 text-white" style="background: #527ed0">
+        <div class="row justify-content-md-center py-5 px-xl-5">
+            <div class="col-md-6 col-12 py-5">
+                <div class="text-center mb-2 pb-2">
+                    <h2 class="section-title px-5 mb-3"><span class=" x-2">Ne manquer rien!</span></h2>
+                    <p>Télécharger l'application Copkin, pour ne rien manquer de nos prochaine promotion</p>
+                </div>
+                <div class="d-flex justify-content-around align-items-center">
+                    <div class="android">pour android</div>
+                    <div class="iphone">pour iphone</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Subscribe End -->
+
+{% endblock %}
+    <!-- Footer Start -->
+    <div class="container-fluid  text-dark mt-5 pt-5" style="background: rgba(255,182,0,0.51)">
+        <div class="row px-xl-5 pt-5">
+            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+                <a href="{% url 'shop_app:home_shop' %}" class="mb-5 d-flex justify-content-lg-start">
+                    <img style="width: 200px" alt="copkin" src="{% static 'img/logo.png' %}">
+                </a>
+                <p>Teka somba en toute simplicité avec copkin, pour tout contacte</p>
+                <p class="mb-1"><i class="fa fa-envelope text-primary mr-3"></i>copkin2021@gmail.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+243 850411990</p>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">lien utils</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="{% url 'shop_app:home_shop' %}"><i class="fa fa-angle-right mr-2"></i>Accueil</a>
+                            <a class="text-dark mb-2" href="{% url 'shop_app:shopping_shop' %}"><i class="fa fa-angle-right mr-2"></i>nos produits</a>
+                            <a class="text-dark mb-2" href="{% url 'shop_app:contact_shop' %}"><i class="fa fa-angle-right mr-2"></i>Nous contactez</a>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Télécharger copkin app</h5>
+                        <div class="d-flex flex-row justify-content-around ">
+                            <div class="android">
+                                pour android
+                            </div>
+                            <div class="iphone">
+                                pour iphone
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-light mx-xl-5 py-4">
+                <p class="w-100 text-center">
+                     &copy; <a class="text-dark font-weight-semi-bold" href="{% url 'shop_app:home_shop' %}">copkin</a>. All Rights Reserved.
+                </p>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="{% static 'mail/jqBootstrapValidation.min.js' %}"></script>
+    <script src="{% static 'mail/contact.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
