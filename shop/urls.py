@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, categorie, contact, detail, shopping
+from .views import home, categorie, contact, detail, shopping, search
 
 
 app_name = 'shop_app'
@@ -10,4 +10,5 @@ urlpatterns = [
     path('produits', shopping, name='shopping_shop'),
     path('produits/categorie?<str:categorie>', categorie, name='categorie_shop'),
     path('produits/detail?<int:pk>', detail, name='detail_shop'),
+    path('produits/search?', search, name='search')
 ]

@@ -48,6 +48,8 @@ class Article(models.Model):
 
     # type a la mode
 
+    date_creation = models.DateField(null=True, blank=True, auto_now=True)
+
     def __str__(self):
         return self.nom
 
@@ -61,11 +63,24 @@ class Article(models.Model):
         super().delete(*args, **kwargs)
 
 
+    class Meta:
+        ordering = ['-date_creation']
+
+
 class Promotion(models.Model):
     nom = models.CharField(max_length=200, default="mega promotiom et solde")
-    pourcent = models.IntegerField(null=True, blank=True)
-    description = models.CharField(max_length=500, blank=True, null=True)
-    produit = models.ForeignKey(Article, on_delete=models.CASCADE)
+    description = models.CharField(verbose_name='description de la promotion', max_length=500, blank=True, null=True)
+    produit = models.ForeignKey(Article, verbose_name='produit associer', on_delete=models.CASCADE)
+    pourcent = models.IntegerField(verbose_name='pourcentage de reduction', null=True, blank=True)
+
+    active = models.BooleanField(verbose_name="etat d'activation de la promotion", default=False)
+
+    date_de_creation = models.DateTimeField(auto_now=True, null=True, blank=True)
 
     def __str__(self):
         return f"promotion de {self.pourcent}% sur {self.produit.nom}"
+
+
+
+    class Meta:
+        ordering = ['-date_de_creation']
