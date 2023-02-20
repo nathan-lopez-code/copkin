@@ -26,3 +26,15 @@ def number(query, number):
 @register.filter
 def spromo(value, reduct):
     return int((value * reduct) / 100)
+
+
+@register.filter
+def price(query, strr):
+    a = int(strr.split('-', 2)[0])
+    b = int(strr.split('-', 2)[1])
+    list_query = []
+    for article in query:
+        if a < article.prix < b:
+            list_query.append(article)
+
+    return len(list_query)

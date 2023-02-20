@@ -62,30 +62,44 @@
                     <small class="fas fa-star"></small>
                     <small class="fas fa-star"></small>
                     <small class="fas fa-star"></small>
-                    <small class="fas fa-star-half-alt"></small>
-                    <small class="far fa-star"></small>
+                    <small class="fas fa-star"></small>
+                    <small class="far fa-star-half"></small>
                 </div>
             </div>
-            <h3 class="font-weight-semi-bold mb-4">${{ article.prix }}.00</h3>
+            <div class="d-flex justify-content-between mb-3">
+            {% if promoactive %}
+              <h3 class=" btn btn-primary font-weight-semi-bold ">Promotion : ${{ article.prix|spromo:ppromo }}.00</h3>
+
+            {% else %}
+                {{ promoactive }}
+                <h3 class="font-weight-semi-bold ">${{ article.prix }}.00</h3>
+
+            {% endif %}
+                <a href="https://wa.me/" class="btn btn-primary" style="background: #1a45ef!important; color: white!important;">
+                    <i class="fas fa-shopping-cart"> </i> Commander maintenant
+                </a>
+            </div>
             <p class="mb-4">{{ article.description }}</p>
 
             <div class="d-flex pt-2">
                 <p class="text-dark font-weight-medium mb-0 mr-2">partager sur:</p>
                 <div class="d-inline-flex">
                     <a class="text-dark px-2" href="">
-                        <i class="fab fa-facebook-f"></i>
+                        <i class="fab fa-facebook-f fa-2x"></i>
                     </a>
                     <a class="text-dark px-2" href="">
-                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-whatsapp fa-2x"></i>
                     </a>
                     <a class="text-dark px-2" href="">
-                        <i class="fab fa-linkedin-in"></i>
+                        <i class="fab fa-instagram fa-2x"></i>
                     </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-pinterest"></i>
-                    </a>
+
                 </div>
+
             </div>
+            <a href="https://wa.me/" class="btn btn-primary w-100 mt-4 mb-2" style="background: #4f6ce3!important; color: white!important; ">
+                    <i class="fas fa-shopping-cart"> </i> Commander maintenant
+            </a>
         </div>
     </div>
     <div class="row px-xl-5">
@@ -124,29 +138,30 @@
 <!-- Shop Detail End -->
 
 
-{% if simulaire %}
+{% if simulaire.count > 1 %}
 <!-- Products Start -->
 <div class="container-fluid py-5">
     <div class="text-center mb-4">
         <h2 class="section-title px-5"><span class="px-2">Article simulaire</span></h2>
     </div>
     <div class="row px-xl-5">
+
         <div class="col">
             <div class="owl-carousel related-carousel">
-                {% for article in simulaire %}
+                {% for art in simulaire %}
                 <div class="card product-item border-0" style="height: 400px">
                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                        <img class="img-fluid w-100" src="{{ article.image1.url }}" alt="">
+                        <img class="img-fluid w-100" src="{{ art.image1.url }}" alt="">
                     </div>
                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                        <h6 class="text-truncate mb-3">{{ article.nom }}</h6>
+                        <h6 class="text-truncate mb-3">{{ art.nom }}</h6>
                         <div class="d-flex justify-content-center">
-                            <h6>${{ article.prix }}.00</h6><h6 class="text-muted ml-2"><del>${{ article.prix|reduction }}</del></h6>
+                            <h6>${{ art.prix }}.00</h6><h6 class="text-muted ml-2"><del>${{ art.prix|reduction }}</del></h6>
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>plus d'information</a>
-                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Commander</a>
+                        <a href="{{ art.get_absolute_url }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>plus d'information</a>
+                        <a href="https://wa.me/" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Commander</a>
                     </div>
                 </div>
                 {% endfor %}
@@ -154,13 +169,99 @@
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-center align-items-center mt-4">
-        <a style="padding: 10px; background: #527ed0; color: white; border-radius: 5px" href="{{ article.categorie.get_absolute_url }}">voir tout les produit de cette categorie</a>
-    </div>
+    <a class="btn btn-primary w-100 mt-3" href="{% url 'shop_app:shopping_shop' %}"> voir tout nos produits</a>
 </div>
 <!-- Products End -->
+{% else %}
+<div class="container-fluid py-5">
+    <div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">vous pourriez être interesser par</span></h2>
+    </div>
+    <div class="row px-xl-5">
+
+        <div class="col">
+            <div class="owl-carousel related-carousel">
+                {% for art in articles %}
+                <div class="card product-item border-0" style="height: 400px">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src="{{ art.image1.url }}" alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">{{ art.nom }}</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>${{ art.prix }}.00</h6><h6 class="text-muted ml-2"><del>${{ art.prix|reduction }}</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="{{ art.get_absolute_url }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>plus d'information</a>
+                        <a href="https://wa.me/" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Commander</a>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary w-100 mt-3" href="{% url 'shop_app:shopping_shop' %}"> voir tout nos produits</a>
+</div>
 {% endif %}
-é
+    {% if promotions %}
+        <!-- Offer Start -->
 
+        <div class="container-fluid pt-5 pb-3">
 
+            <div class="row px-xl-5">
+                {% for promo in promotions %}
+                <div class="col-md-6">
+                    <div class="product-offer mb-30" style="height: 300px;">
+                        <img class="img-fluid" src="{{ promo.produit.image1.url }}" alt="">
+                        <div class="offer-text">
+                            <h6 class="text-white text-uppercase">{{ promo.nom }}</h6>
+                            <h3 class="text-white mb-3 text-center">profiter de {{ promo.pourcent }} % de reduction <br> sur {{ promo.produit.nom }}</h3>
+                            <h5 style="color: #2d2dd3; background: rgba(255,255,255,0.66); border-radius: 5px; padding: 3px">${{ promo.produit.prix|spromo:promo.pourcent }}.00</h5><h6 style="background: rgba(245,72,72,0.81); padding: 4px; color: white" class="ml-2"><del>${{ promo.produit.prix }}.00</del></h6>
+                            <a href="{{ promo.produit.get_absolute_url }}" class="btn btn-primary">Profitez maintenant</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        <!-- Offer End -->
+
+    {% else %}
+
+        <div class=" p-30" style="height: 250px; background: center center url({% static 'img/app_background.jpg' %}) no-repeat">
+            <div class="w-100 text-center pt-3" style="background: rgba(255,225,23,0.61); border-radius: 10px">
+                <h5 >Télécharger notre application pour ne rien manquer</h5>
+                <p> Disponible sur </p>
+                    <div class="d-flex w-100 pb-2 justify-content-between align-items-center"></div>
+                    <a  href="" >
+                        <img  alt="Android " width="205px" src="{% static 'img/playstore.png' %}">
+                    </a>
+                    <a  href="" >
+                        <img  alt="Iphone" width="155px" src="{% static 'img/logo-app-store.png' %}">
+                    </a>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="container-fluid">
+        <div class="col-lg-4">
+                    <div class=" p-30" style="height: 250px; background: center center url({% static 'img/app_background.jpg' %}) no-repeat">
+
+                    <div class="w-100 text-center pt-3" style="background: rgba(255,225,23,0.61); border-radius: 10px">
+                        <h5 >Télécharger notre application pour ne rien manquer</h5>
+                        <p> Disponible sur </p>
+                            <div class="d-flex w-100 pb-2 justify-content-between align-items-center"></div>
+                            <a  href="" >
+                                <img  alt="Android " width="205px" src="{% static 'img/playstore.png' %}">
+                            </a>
+                            <a  href="" >
+                                <img  alt="Iphone" width="155px" src="{% static 'img/logo-app-store.png' %}">
+                            </a>
+                    </div>
+                </div>
+                </div>
+    </div>
 {% endblock %}
