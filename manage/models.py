@@ -17,7 +17,7 @@ class Categorie(models.Model):
     )
 
     def __str__(self):
-        return f"{self.nom}"
+        return f"{self.id}"
 
     def get_absolute_url(self):
         return reverse('shop_app:categorie_shop', kwargs={'categorie' : self.nom})
@@ -41,7 +41,7 @@ class Article(models.Model):
     image3 = models.ImageField(upload_to='articles/', null=True, blank=True)
 
     # categorie
-    categorie = models.ForeignKey(Categorie,on_delete=models.CASCADE)
+    categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE)
 
     # genre
     genre = models.CharField(max_length=100, null=True, blank=True)
@@ -51,7 +51,7 @@ class Article(models.Model):
     date_creation = models.DateField(null=True, blank=True, auto_now=True)
 
     def __str__(self):
-        return self.nom
+        return f'{self.id}'
 
     def get_absolute_url(self):
         return reverse('shop_app:detail_shop', kwargs={'pk': self.id})
