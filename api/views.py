@@ -21,12 +21,11 @@ def list_categorie(request):
 def list_promotion(request):
 
     return JsonResponse(
-        {'categories': CategorieSerialiser(Promotion.objects.filter(active=True), many=True).data}
+        {'categories': PromotionSerialiser(Promotion.objects.filter(active=True), many=True).data}
     )
 
 
 def article_categorie(request, id_categorie):
-    response = {}
     try:
         query = Categorie.objects.get(pk=id_categorie).article_set
     except Exception as e:
@@ -41,10 +40,10 @@ def article_categorie(request, id_categorie):
 
 def home_api(request):
 
-    respose = {
+    response = {
         'promotions': PromotionSerialiser(Promotion.objects.filter(active=True), many=True).data,
         'categories': CategorieSerialiser(Categorie.objects.all(), many=True).data,
         'Articles': ArticleSerialiser(Article.objects.all(), many=True).data,
     }
 
-    return JsonResponse(respose)
+    return JsonResponse(response)
