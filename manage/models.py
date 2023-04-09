@@ -17,7 +17,7 @@ class Categorie(models.Model):
     )
 
     def __str__(self):
-        return f"{self.id}"
+        return f"{self.nom}"
 
     def get_absolute_url(self):
         return reverse('shop_app:categorie_shop', kwargs={'categorie' : self.nom})
@@ -51,7 +51,7 @@ class Article(models.Model):
     date_creation = models.DateField(null=True, blank=True, auto_now=True)
 
     def __str__(self):
-        return f'{self.id}'
+        return f'{self.nom}'
 
     def get_absolute_url(self):
         return reverse('shop_app:detail_shop', kwargs={'pk': self.id})
@@ -61,7 +61,6 @@ class Article(models.Model):
         delete_util(self.image2)
         delete_util(self.image3)
         super().delete(*args, **kwargs)
-
 
     class Meta:
         ordering = ['-date_creation']
@@ -80,7 +79,23 @@ class Promotion(models.Model):
     def __str__(self):
         return f"promotion de {self.pourcent}% sur {self.produit.nom}"
 
-
-
     class Meta:
         ordering = ['-date_de_creation']
+
+
+class MesInformation(models.Model):
+
+    nom_du_site = models.CharField(default="copkin", max_length=30, editable=False)
+    numero_whatsapp = models.CharField(
+        default="243850411990", help_text=" ex : 24398765795 (Sans espace ni +", max_length=16)
+    autre_numero = models.CharField(
+        default="243850411990", help_text=" ex : 24398765795 (Sans espace ni +", max_length=16)
+
+    adresse = models.CharField(max_length=200, default="ville de kinshasa")
+    email = models.EmailField()
+
+
+
+
+
+

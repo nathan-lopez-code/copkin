@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http.response import HttpResponse
 from .forms import SearchFrom
-from manage.models import Categorie, Article, Promotion
+from manage.models import Categorie, Article, Promotion, MesInformation
 from django.core.paginator import Paginator
 
 
@@ -21,9 +21,14 @@ def home(request):
     recent = list(Article.objects.all())
 
     promotion = Promotion.objects.filter(active=True)[:2]
-
+    info = MesInformation.objects.get(pk=1)
     context = {'categories': categories, 'recent': recent, 'active_id': recent[0].id,
-               'promotions': promotion, 'recent4': Article.objects.all()[:4], 'form': SearchFrom}
+               'promotions': promotion, 'recent4': Article.objects.all()[:4], 'form': SearchFrom,
+               'mail': info.email,
+               'numero': info.numero_whatsapp,
+               "autre_numero": info.autre_numero,
+               'adresse': info.adresse,
+               }
 
     return render(request, 'shop/home.html', context)
 
@@ -31,11 +36,13 @@ def home(request):
 def contact(request):
     """pqge de contact """
 
+    info = MesInformation.objects.get(pk=1)
     context = {
         'form': SearchFrom,
-        'mail': "copkin21@gmail.com",
-        'numero': "+243 850411990",
-        'adresse': "ville de kinsasha",
+        'mail': info.email,
+        'numero': info.numero_whatsapp,
+        "autre_numero": info.autre_numero,
+        'adresse': info.adresse,
         'categories': Categorie.objects.all()
     }
     return render(request, 'shop/contact.html', context)
@@ -44,10 +51,11 @@ def contact(request):
 def shopping(request):
     categories = Categorie.objects.all()
     articles = Article.objects.all()
-    paginator = Paginator(articles, 4)
+    paginator = Paginator(articles, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     query = []
+    info = MesInformation.objects.get(pk=1)
 
     if not request.GET.get('categorie-all'):
         for categorie in categories:
@@ -86,11 +94,17 @@ def shopping(request):
         'articles': articles,
         'page_obj': page_obj,
         'form': SearchFrom,
+        'mail': info.email,
+        'numero': info.numero_whatsapp,
+        "autre_numero": info.autre_numero,
+        'adresse': info.adresse,
     })
 
 
 
 def detail(request, pk):
+
+    info = MesInformation.objects.get(pk=1)
 
     try:
         article = Article.objects.get(id=pk)
@@ -113,7 +127,13 @@ def detail(request, pk):
             'form': SearchFrom,
             'promoactive': promo,
             'ppromo': ppromo,
-            'categories': Categorie.objects.all()
+            'categories': Categorie.objects.all(),
+            'mail': info.email,
+            'numero': info.numero_whatsapp,
+            "autre_numero": info.autre_numero,
+            'adresse': info.adresse,
+
+
         })
 
     except Exception as e:
@@ -123,6 +143,7 @@ def detail(request, pk):
 def search(request):
 
     nom = request.GET['nom']
+    info = MesInformation.objects.get(pk=1)
     try:
         articles = Article.objects.filter(nom__contains=nom) or Article.objects.filter(categorie__nom__contains=nom)
     except Exception as e:
@@ -130,6 +151,27 @@ def search(request):
     paginator = Paginator(articles, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {'key': nom, 'page_obj': page_obj, 'categories': Categorie.objects.all(), 'form': SearchFrom}
+    context = {'key': nom, 'page_obj': page_obj, 'categories': Categorie.objects.all(), 'form': SearchFrom,
+               'mail': info.email,
+               'numero': info.numero_whatsapp,
+               "autre_numero": info.autre_numero,
+               'adresse': info.adresse,
+               }
 
     return render(request, 'shop/search.html', context)
+
+
+def sell(request):
+
+    search = SearchFrom()
+
+    info = MesInformation.objects.get(pk=1)
+    context = {
+        'form': search,
+        'mail': info.email,
+        'numero': info.numero_whatsapp,
+        "autre_numero": info.autre_numero,
+        'adresse': info.adresse,
+        'categories': Categorie.objects.all(),
+    }
+    return render(request, 'shop/sell.html', context)

@@ -1,0 +1,76 @@
+{% load i18n %}
+{% if app_list %}
+  {% for app in app_list %}
+      <li>
+        <h6 class="ml-3"> {{ app.nom }} </h6>
+      </li>
+      {% for model in app.models %}
+          {% if model.name != "Mes informations" and model.name != "Groupes"%}
+            <li class="sub-menu">
+                <a href="javascript:;">
+                  <i class="{% if model.name == "Articles" %}fa fa-shopping-bag{% elif model.name == "Categories" %}fa fa-tasks{% elif model.name == "Promotions" %}fa fa-bullhorn{% else %}fa fa-user{% endif %}"></i>
+                  <span>{{ model.name }}</span>
+                  </a>
+                <ul class="sub">
+                    <li>
+                        <h6> application : {{ app.name }} </h6>
+                        <div style="width: 80%; height: 1px; background: white"></div>
+                    </li>
+
+
+                   {% if model.add_url %}
+                       <li><a href="{{ model.add_url }}" class="addlink"><i class="fa fa-plus"></i> <span>{% blocktranslate with name=model.name %}Add {{ name }}{% endblocktranslate %}</span></a></li>
+                   {% else %}
+                      <li></li>
+                   {% endif %}
+
+
+
+                   {% if model.admin_url and show_changelinks %}
+                      {% if model.view_only %}
+                        <li><a href="{{ model.admin_url }}" class="viewlink">{% translate 'View' %} {{ model.name }}</a></li>
+                      {% else %}
+                          <li><a href="{{ model.admin_url }}" class="changelink"><i class="fa fa-edit"></i><span>{% translate 'Change' %} {{ model.name }}</span></a></li>
+                      {% endif %}
+                    {% elif show_changelinks %}
+                      <li></li>
+                   {% endif %}
+
+                </ul>
+            </li>
+          {% endif %}
+      {% endfor %}
+  {% endfor %}
+  {% for app in app_list %}
+      {% for model in app.models %}
+          {% if model.name == "Mes informations" %}
+              <li>
+                <h6 class="ml-3">Configuraations</h6>
+              </li>
+              <li class="sub-menu">
+                <a href="javascript:;">
+                  <i class="fa fa-gears"></i>
+                  <span>{{ model.name }}</span>
+                  </a>
+                <ul class="sub">
+                    <li>
+                        <h6> application : {{ app.name }} </h6>
+                        <div style="width: 80%; height: 1px; background: white"></div>
+                    </li>
+
+                   {% if model.admin_url and show_changelinks %}
+                      {% if model.view_only %}
+                        <li><a href="{{ model.admin_url }}" class="viewlink">{% translate 'View' %} {{ model.name }}</a></li>
+                      {% else %}
+                          <li><a href="{{ model.admin_url }}" class="changelink"><i class="fa fa-edit"></i><span>{% translate 'Change' %} {{ model.name }}</span></a></li>
+                      {% endif %}
+                    {% elif show_changelinks %}
+                      <li></li>
+                   {% endif %}
+
+                </ul>
+            </li>
+          {% endif %}
+      {% endfor %}
+  {% endfor %}
+{% endif %}

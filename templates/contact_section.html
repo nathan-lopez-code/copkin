@@ -1,0 +1,8 @@
+{% load shop_tags %}
+
+<p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>{{ adresse }}</p>
+<p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>{{ mail }}</p>
+<p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>{{ numero|number_convension }}</p>
+{% if autre_numero != numero %}
+    <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>{{ autre_numero|number_convension }}</p>
+{% endif %}

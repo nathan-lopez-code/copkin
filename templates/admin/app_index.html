@@ -1,0 +1,28 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block bodyclass %}{{ block.super }} app-{{ app_label }}{% endblock %}
+
+
+
+{% if not is_popup %}
+{% block breadcrumbs %}
+<div style="
+  font-size: 16px;
+  margin-top: 5px;
+  width: 100%;
+  background: linear-gradient(to right, rgb(82,126,208), rgba(82,126,208,0.2));
+  padding: 5px;
+">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo;
+{% for app in app_list %}
+{{ app.name }}
+{% endfor %}
+</div>
+{% endblock %}
+{% endif %}
+
+{% block sidebar %}
+{% endblock %}
+

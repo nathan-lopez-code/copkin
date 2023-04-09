@@ -1,0 +1,27 @@
+{% load admin_list %}
+{% load i18n %}
+<div class="dataTables_paginate paging_bootstrap pagination">
+
+<style>
+    li .this-page{
+        padding: 5px 10px;
+        text-align: center;
+        background: yellow;
+        border-radius: 2px;
+        border: 1px solid rgba(0, 0, 0, 0.35);
+    }
+</style>
+
+<ul>
+{% if pagination_required %}
+
+{% for i in page_range %}
+    <li>{% paginator_number cl i %}</li>
+{% endfor %}
+{% endif %}
+{% if show_all_url %}<li><a href="{{ show_all_url }}" class="showall">{% translate 'Show all' %}</a></li>{% endif %}
+{% if cl.formset and cl.result_count %}<li><input type="submit" name="_save" class="default" value="{% translate 'Save' %}"></li>{% endif %}
+</ul>
+</div>
+
+

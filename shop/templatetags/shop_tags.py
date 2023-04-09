@@ -10,7 +10,7 @@ def four(query):
 
 @register.filter
 def reduction(prix):
-    return round(prix * 1.7, 2)
+    return round(float(prix) * 1.7, 2)
 
 
 @register.filter
@@ -38,3 +38,8 @@ def price(query, strr):
             list_query.append(article)
 
     return len(list_query)
+
+
+@register.filter
+def number_convension(value):
+    return f"(+{value[0:3]}) {value[3:]}"

@@ -1,0 +1,82 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/dashboard.css" %}">{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block application_nav_list %}
+   {% include "admin/app_list_nav.html" with app_list=app_list show_changelinks=True %}
+{% endblock %}
+
+{% block content %}
+<div class="col-lg-12">
+<div class="row content-panel">
+  <div class="col-md-4 profile-text mt mb centered">
+
+  </div>
+  <!-- /col-md-4 -->
+  <div class="col-md-4 profile-text">
+
+    <h3>{{ user.get_username}}</h3>
+    <h6>Main Administrator</h6>
+    <p>Bienvenue sur le site d'administration de copkin, ici vous pourriez ajouter des articles, ajouter de categories d'article et bien plus encore
+    </p>
+  </div>
+  <!-- /col-md-4 -->
+  <div class="col-md-4 centered">
+    <div class="profile-pic">
+      <p><img src="{% static 'img/logo.png' %}" class="img-circle"></p>
+    </div>
+  </div>
+  <!-- /col-md-4 -->
+</div>
+<!-- /row -->
+</div>
+<div id="content-main">
+  {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+
+<h4 class="centered mt">{% translate 'Recent actions' %}</h4>
+<h6 class="centered mt">{% translate 'My actions' %}</h6>
+{% load log %}
+{% get_admin_log 10 as admin_log for_user user %}
+{% if not admin_log %}
+    <p>{% translate 'None available' %}</p>
+{% else %}
+    {% for entry in admin_log %}
+        <!-- First Activity -->
+        <div class="desc">
+          <div class="thumb">
+            <span class="badge bg-theme"><i class="fa fa-clock-o"></i></span>
+          </div>
+          <div class="details">
+            <p>
+              <muted>{{ entry.action_time }}</muted>
+            <br>
+              <span class="d-block">
+               {% if entry.is_addition %}Ajout de{% endif %}{% if entry.is_change %}Modification de{% endif %}{% if entry.is_deletion %}Suppression de{% endif %} {{ entry.content_type.name}}
+                </span>
+              <br/>
+                {% if entry.is_deletion or not entry.get_admin_url %}
+                    {{ entry.object_repr }}
+                {% else %}
+                    <a style="font-size: 14px; color: #282802" href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                {% endif %}
+
+            </p>
+          </div>
+        </div>
+        <!-- Second Activity -->
+    {% endfor %}
+{% endif %}
+{% endblock %}

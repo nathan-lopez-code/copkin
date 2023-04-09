@@ -8,6 +8,13 @@
  Copkin - Nous contactez
 {% endblock %}
 
+{% block accueil %} - {% endblock %}
+{% block shop %} - {% endblock %}
+{% block categorie %} - {% endblock %}
+{% block contact %} active {% endblock %}
+{% block sell %} - {% endblock %}
+
+
 {% block main %}
  <!-- Breadcrumb Start -->
     <div class="container-fluid">
@@ -31,10 +38,16 @@
                 <div class="bg-light p-30 mb-30">
                     <iframe style="width: 100%; height: 250px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127297.67587343676!2d15.322744649999997!3d-4.40130375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a6a3130fe066a8b%3A0x168b7e4e1f52378d!2sKinshasa!5e0!3m2!1sfr!2scd!4v1676907933386!5m2!1sfr!2scd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-                <div class="bg-light p-30 mb-3">
+
+            </div>
+            <div class="col-lg-7 pb-5">
+                    <div class="bg-light p-30 mb-3">
                     <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>{{ adresse }}</p>
                     <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>{{ mail }}</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>{{ numero }}</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>{{ numero|number_convension }}</p>
+                    {% if autre_numero != numero %}
+                        <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>{{ autre_numero|number_convension }}</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

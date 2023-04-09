@@ -3,6 +3,11 @@
 {% load static %}
 {% load shop_tags %}
 
+{% block accueil %} - {% endblock %}
+{% block shop %} active {% endblock %}
+{% block categorie %} - {% endblock %}
+{% block contact %} - {% endblock %}
+{% block sell %} - {% endblock %}
 
 {% block main %}
   <!-- Breadcrumb Start -->
@@ -72,7 +77,7 @@
                             <span class="badge border font-weight-normal">{{ articles|price:"700-150000000" }} articles</span>
                         </div>
 
-                        <input type="submit" name="filtrer" class="btn btn-primary w-100 is-border-radius mt-2 mb-2">
+                        <input type="submit" name="filtrer" value="filtrer" class="btn btn-primary w-100 is-border-radius mt-2 mb-2">
                     </form>
                 </div>
 

@@ -1,0 +1,7 @@
+{% load i18n %}
+<h4>{% translate "Summary" %}</h4>
+<ul>
+    {% for model_name, object_count in model_count %}
+    <li>Nombre de {{ model_name|capfirst }}: {{ object_count }} {{ model_name }} a supprimer</li>
+    {% endfor %}
+</ul>

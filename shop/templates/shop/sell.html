@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load shop_tags %}
+
+{% block title %}
+    vendez vos produits avec Copkin
+{% endblock %}
+
+{% block accueil %} - {% endblock %}
+{% block shop %} - {% endblock %}
+{% block categorie %} - {% endblock %}
+{% block contact %} - {% endblock %}
+{% block sell %} active {% endblock %}
+
+{% block main %}
+
+<!-- Page Header Start -->
+<div class="container-fluid bg-secondary mb-0">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Vendez avec nous</h1>
+        <div class="d-inline-flex">
+            <p class="m-0">vous pouvez vendre vos produit avec copkin </p>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 ">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="border">
+                    <div >
+                        <img class="w-100 h-100" src="{% static 'img/sell.jpeg' %}" alt="Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7 pb-5 pt-2">
+            <p>
+                Vous avez de marchandises a vendre , de produit de haute qualite a offrir au grand publique
+            </p>
+            <p> vous etes au bon endroit. Avec copkin , vous avez la possiblite de vendre vos produits, vous offrant les avantages qui suivent</p>
+            <ul>
+                <li> vous beneficiez du reseau marqueting de copkin</li>
+                <li> vos produits peut s/ecouler partout en RDC</li>
+                <li> Vos produits sont exposer sur notre site internet et sur notre application mobile</li>
+                <li> Un leger cout de pourcentage</li>
+            </ul>
+            <p>Pour plus d'information a ce sujet , contactez nous </p>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Contacter nous</span></h2>
+        <div class="row px-xl-5">
+            <div class="col-lg-5 mb-5">
+                <div class="bg-light p-30 mb-30">
+                    <iframe style="width: 100%; height: 250px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127297.67587343676!2d15.322744649999997!3d-4.40130375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a6a3130fe066a8b%3A0x168b7e4e1f52378d!2sKinshasa!5e0!3m2!1sfr!2scd!4v1676907933386!5m2!1sfr!2scd" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+
+            </div>
+            <div class="col-lg-7 pb-5">
+                <div class="bg-light p-30 mb-3">
+                    {% include "contact_section.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

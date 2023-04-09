@@ -1,0 +1,68 @@
+{% load i18n %}
+
+{% if app_list %}
+  {% for app in app_list %}
+    {% if app.name == "Manage" %}
+        {% for model in app.models %}
+            {% if model.name != "Mes informations" %}
+<div class="row mt">
+           <div class="col-md-12 mt-2">
+            <section class="task-panel tasks-widget">
+              <div class="panel-heading">
+                <div class="pull-left">
+                    {% if model.admin_url %}
+                      <a href="{{ model.admin_url }}"{% if model.admin_url in request.path|urlencode %} aria-current="page"{% endif %}><h4><i class="fa fa-tasks"></i> {{ model.name }} </h4></a>
+                    {% else %}
+                      <h5><i class="fa fa-tasks"></i> {{ model.name }}</h5>
+                    {% endif %}
+                </div>
+                <hr>
+              </div>
+              <div class="panel-body pb-0">
+                <div class="task-content">
+                  <ul style="display: flex; justify-content: space-between; width: 100%; flex-wrap: wrap">
+                    <li >
+                       {% if model.add_url %}
+                          <div class="task-title">
+                            <a href="{{ model.add_url }}" class="btn  btn-theme"><i class="fa fa-plus"></i> Ajouter {{ model.name }}</a>
+                          </div>
+                       {% else %}
+                           <div></div>
+                       {% endif %}
+                    </li>
+
+                        {% if model.admin_url and show_changelinks %}
+                          {% if model.view_only %}
+                            <li>
+                            <div class="task-title">
+                                <a href="{{ model.admin_url }}" class="btn btn-success "><i class="fa fa-eye"></i> Voir {{ model.name }}</a>
+                            </div>
+                              </li>
+                          {% else %}
+                              <li>
+                                <div class="task-title">
+                                    <a href="{{ model.admin_url }}" class="btn btn-theme02 text-primary"><i class="fa fa-edit"></i> Modifier {{ model.name }}</a>
+                                </div>
+                              </li>
+                          {% endif %}
+                        {% elif show_changelinks %}
+                            <div></div>
+                        {% endif %}
+                        <li>
+                           <a href="{{ model.admin_url }}" class="btn btn-default" ><i class="fa fa-eye"></i> Voir tout {{ model.name }}</a>
+                        </li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+</div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% else %}
+  <p>{% translate 'You don’t have permission to view or edit anything.' %}</p>
+{% endif %}
+
+

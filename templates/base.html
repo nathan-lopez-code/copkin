@@ -8,8 +8,8 @@
     <meta charset="utf-8">
     <title>{% block title %}Copkin - Achater en ligne en toute sécurité{% endblock %}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="achat en ligne à kinshasha" name="keywords">
-    <meta content="Achqt en ligne en toute securité" name="description">
+    <meta content="achat et vente en ligne à kinshasha" name="keywords">
+    <meta content="Achat et vente en ligne en toute securité" name="description">
 
     <!-- Favicon -->
     <link href="{% static 'img/favicon.ico' %}" rel="icon">
@@ -54,20 +54,19 @@
                 </a>
             </div>
             <div class="col-lg-4 col-6 text-left">
-                <form action="">
+                 <form action="{% url 'shop_app:search' %}" method="get">
+                    {% csrf_token %}
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Rechercher un article">
+                        {{ form.nom }}
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
+                            <input type="submit" class="btn btn-primary" value="Rechercher"></input>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="col-lg-4 col-6 text-right">
                 <p class="m-0">Contactez nous</p>
-                <h5 class="m-0"><a href="tel:243850411990"></a>+243 850411990</h5>
+                <h5 class="m-0"><a href="tel:{{ numero }}"></a>{{ numero|number_convension }}</h5>
             </div>
         </div>
     </div>
@@ -100,27 +99,19 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="{% url 'shop_app:home_shop' %}" class="nav-item nav-link active">Accueil</a>
-                            <a href="{% url 'shop_app:shopping_shop' %}" class="nav-item nav-link">Shop</a>
+                            <a href="{% url 'shop_app:home_shop' %}" class="nav-item nav-link {% block accueil %}active{% endblock %}">Accueil</a>
+                            <a href="{% url 'shop_app:shopping_shop' %}" class="nav-item nav-link {% block shop %}{% endblock %}">Shop</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">par categorie<i class="fa fa-angle-down mt-1"></i></a>
+                                <a href="#" class="nav-link dropdown-toggle {% block categorie %}{% endblock %}" data-toggle="dropdown">par categorie<i class="fa fa-angle-down mt-1"></i></a>
                                 <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
                                     {% for categorie in categories %}
                                         <a href="{% url 'shop_app:shopping_shop' %}?categorie-{{ categorie.id }}=on&price-all=on" class="dropdown-item">{{ categorie.nom }}</a>
                                     {% endfor %}
                                 </div>
                             </div>
-                            <a href="{% url 'shop_app:contact_shop' %}" class="nav-item nav-link">Contact</a>
-                        </div>
-                        <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                            <a href="" class="btn px-0">
-                                <i class="fas fa-heart text-primary"></i>
-                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
-                            </a>
-                            <a href="" class="btn px-0 ml-3">
-                                <i class="fas fa-shopping-cart text-primary"></i>
-                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
-                            </a>
+                            <a href="{% url 'shop_app:contact_shop' %}" class="nav-item nav-link {% block contact %}{% endblock %}">Contact</a>
+                            <br>
+                            <a href="{% url 'shop_app:sell_shop' %}" class="nav-item nav-link {% block sell %}{% endblock %}">vendez avec nous</a>
                         </div>
                     </div>
                 </nav>
@@ -273,7 +264,8 @@
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Meilleur produits</span></h2>
         <div class="row px-xl-5">
             {% for categorie in categories %}
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1" >
+                {% if categorie.article_set.last %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 pb-1" >
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
                         <img class="img-fluid w-100" src="{{ categorie.article_set.last.image1.url }}" alt="">
@@ -299,6 +291,7 @@
                     </div>
                 </div>
             </div>
+                {% endif %}
             {% endfor %}
         </div>
         <a class="btn btn-primary w-100 p-2" href="{% url 'shop_app:shopping_shop' %}">voir tout nos produit</a>
@@ -399,7 +392,7 @@
                 <div class="owl-carousel vendor-carousel">
                    {% for categorie in categories %}
                     <div class="bg-light">
-                        <a style="border-radius: 5px; height: 70px" href="{{ categorie.get_absoute_url }}" class="btn btn-primary d-flex justify-content-center align-items-center text-center">{{ categorie.nom|capfirst }}</a>
+                        <a style="border-radius: 5px; height: 70px" href="{% url 'shop_app:shopping_shop' %}?categorie-{{ categorie.id }}=on&price-all=on" class="btn btn-primary d-flex justify-content-center align-items-center text-center">{{ categorie.nom|capfirst }}</a>
                     </div>
                     {% endfor %}
 
@@ -410,46 +403,65 @@
     <!-- Vendor End -->
 
     <div class="container-fluid">
-    <div class="col-lg-4">
-                    <div class=" p-30" style="height: 250px; background: center center url({% static 'img/app_background.jpg' %}) no-repeat">
+     <div class="row px-xl-5">
+        <div class="col-lg-4">
+                        <div class=" p-30" style="height: 250px; background: center center url({% static 'img/app_background.jpg' %}) no-repeat">
 
-                    <div class="w-100 text-center pt-3" style="background: rgba(255,225,23,0.61); border-radius: 10px">
-                        <h5 >Télécharger notre application pour ne rien manquer</h5>
-                        <p> Disponible sur </p>
-                            <div class="d-flex w-100 pb-2 justify-content-between align-items-center"></div>
-                            <a  href="" >
-                                <img  alt="Android " width="205px" src="{% static 'img/playstore.png' %}">
-                            </a>
-                            <a  href="" >
-                                <img  alt="Iphone" width="155px" src="{% static 'img/logo-app-store.png' %}">
-                            </a>
+                        <div class="w-100 text-center pt-3" style="background: rgba(255,225,23,0.61); border-radius: 10px">
+                            <h5 >Télécharger notre application pour ne rien manquer</h5>
+                            <p> Disponible sur </p>
+                                <div class="d-flex w-100 pb-2 justify-content-between align-items-center"></div>
+                                <a  href="" >
+                                    <img  alt="Android " width="205px" src="{% static 'img/playstore.png' %}">
+                                </a>
+                                <a  href="" >
+                                    <img  alt="Iphone" width="155px" src="{% static 'img/logo-app-store.png' %}">
+                                </a>
+                        </div>
                     </div>
-                </div>
-                </div>
+        </div>
+        <div class="col-lg-8 bg-light p-30">
+            <h5>Contactez nous</h5>
+            <div class=" mb-3">
+           {% include "contact_section.html" %}
+
+        </div>
     </div>
+     </div>
+    </div>
+
 
 
 {% endblock %}
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-secondary mt-5 pt-5">
-        <div class="row px-xl-5 pt-5">
+    <div class="container-fluid bg-dark text-secondary mt-5">
+        <div class="row px-xl-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-                <h5 class="text-secondary text-uppercase mb-4">Copkin</h5>
-                <p class="mb-4">Tika somba en toute facilité</p>
-                <a class="mb-2 d-block mb-2" href=""><i class="fa fa-envelope text-primary mr-3"></i>copkin21@gmail.com</a>
-                <a class="mb-0 d-block mb-2" href="https://wa.me/243850411990"><i class="fa fa-phone-alt text-primary mr-3"></i>+243 850411990</a>
+
+            <div class="pt-4" style="display: flex; align-items: center; background: linear-gradient(to right, white, #6aa3e1); border-radius: 0px 0px 0px 10px">
+                <img alt="copkin" src="{% static 'img/logo.png' %}" style="width: 90px">
+                <div>
+                    <h4><strong>Teka somba en toute facilité</strong></h4>
+                    <a class="mt-2 ml-1 d-block mb-2 text-dark" href=""><i class="fa fa-envelope text-primary mr-3"></i>{{ mail }}</a>
+                    <a class="mb-0 ml-1 d-block mb-2 text-dark" href="https://wa.me/{{ numero }}"><i class="fa fa-phone-alt text-primary mr-3"></i>{{ numero|number_convension }}</a>
+                    {% if autre_numero != numero %}<a class="mb-0 ml-1 d-block mb-2 text-dark" href="tel:{{ autre_numero }}"><i class="fa fa-phone-alt text-primary mr-3"></i>{{ autre_numero|number_convension }}</a>{% endif %}
+                </div>
             </div>
-            <div class="col-lg-8 col-md-12">
+
+            </div>
+            <div class="col-lg-8 col-md-12 ">
                 <div class="row">
-                    <div class="col-md-4 mb-5">
+                    <div class="col-md-4 mb-5 pt-4">
                         <h5 class="text-secondary text-uppercase mb-4">Lien Rapide</h5>
                         <div class="d-flex flex-column justify-content-start">
                             <a class="text-secondary mb-2" href="{% url 'shop_app:home_shop' %}"><i class="fa fa-angle-right mr-2"></i>Accueil</a>
                             <a class="text-secondary mb-2" href="{% url 'shop_app:contact_shop' %}"><i class="fa fa-angle-right mr-2"></i>Contact</a>
                             <a class="text-secondary mb-2" href="{% url 'shop_app:shopping_shop' %}"><i class="fa fa-angle-right mr-2"></i>Shopoing</a>
+                            <a class="text-secondary mb-2" href="{% url 'shop_app:sell_shop' %}"><i class="fa fa-angle-right mr-2"></i>vendez vos produit sur copkin</a>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-5">
+
+                    <div class="col-md-4 mb-5 pt-4">
                         <h5 class="text-secondary text-uppercase mb-4">Vous rechechez un article</h5>
                         <p>Entrez ici un mot clef </p>
                         <form action="{% url 'shop_app:search' %}" method="get">
@@ -457,11 +469,13 @@
                             <div class="input-group">
                                 {{ form.nom }}
                                 <div class="input-group-append">
-                                    <input type="submit" class="btn btn-primary"></input>
+                                    <input type="submit" class="btn btn-primary" value="Rechercher"></input>
                                 </div>
                             </div>
                         </form>
-                        <h6 class="text-secondary text-uppercase mt-4 mb-3">Suive nous</h6>
+                    </div>
+                    <div class="col-md-4 mb-5 pt-4" >
+                        <h6 class="text-secondary text-uppercase mb-3">Suive nous</h6>
                         <div class="d-flex">
                             <a class="btn btn-primary btn-square mr-2" href=""><i class="fab fa-whatsapp"></i></a>
                             <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
@@ -474,7 +488,7 @@
         <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
             <div class="col-md-6 px-xl-0">
                 <p class="mb-md-0 text-center text-md-left text-secondary">
-                    &copy; <a class="text-primary" href="#">copkin.com</a>Tout droit server. créer par Nathan lopez
+                    &copy; <a class="text-primary" href="{% url 'shop_app:home_shop' %}">copkin.com</a> Tout droit reserver.
                 </p>
             </div>
         </div>
@@ -499,5 +513,6 @@
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
 </body>
+
 
 </html>

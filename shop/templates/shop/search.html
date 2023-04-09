@@ -7,6 +7,11 @@ Resultat de de recherche pour : {{ key }}
 {% endblock %}
 {% load shop_tags %}
 
+{% block accueil %} - {% endblock %}
+{% block shop %} - {% endblock %}
+{% block categorie %} - {% endblock %}
+{% block contact %} - {% endblock %}
+{% block sell %} - {% endblock %}
 
 {% block main %}
   <!-- Breadcrumb Start -->
@@ -37,7 +42,7 @@ Resultat de de recherche pour : {{ key }}
                                 <div class="input-group">
                                     {{ form.nom }}
                                     <div class="input-group-append">
-                                        <input type="submit" class="btn btn-primary"></input>
+                                        <input value="Rechercher" type="submit" class="btn btn-primary">
                                     </div>
                                 </div>
                             </form>

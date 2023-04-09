@@ -1,0 +1,126 @@
+<fieldset class="form-panel">
+    {% if fieldset.name %}<h2>{{ fieldset.name }}</h2>{% endif %}
+    {% if fieldset.description %}
+        <div class="description">{{ fieldset.description|safe }}</div>
+    {% endif %}
+    {% for line in fieldset %}
+        <div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} {% endif %}{% endfor %}">
+            {% if line.fields|length_is:'1' %}{{ line.errors }}{% endif %}
+            {% for field in line %}
+                    {% if not line.fields|length_is:'1' and not field.is_readonly %}{{ field.errors }}{% endif %}
+                    {% if field.is_checkbox %}
+                        {{ field.field }}{{ field.label_tag }}
+                    {% else %}
+                        {% if field.is_readonly %}
+                            <div class="readonly">{{ field.contents }}</div>
+                        {% else %}
+
+                            {% if field.field.name == "image1" %}
+                              {{ field.label_tag }}
+                              <div class="col-md-9">
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                  <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img class="img1" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="" />
+                                  </div>
+                                  <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                  <div class="parent">
+                                    <span class="btn btn-theme02 btn-file">
+                                      <span class="fileupload-new"><i class="fa fa-paperclip"></i> ajouter image</span>
+                                    <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                    {{ field.field }}
+                                    </span>
+                                    <a href="{{ model.add_url }}" id="last1" class="btn btn-theme04 fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
+                                  </div>
+                                </div>
+
+                              </div>
+
+                            {% elif field.field.name == "image2" %}
+                              {{ field.label_tag }}
+                              <div class="col-md-9">
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                  <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img class="img2" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="" />
+                                  </div>
+                                  <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                  <div class="parent">
+                                    <span class="btn btn-theme02 btn-file">
+                                      <span class="fileupload-new"><i class="fa fa-paperclip"></i> ajouter autre image</span>
+                                    <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                    {{ field.field }}
+                                    </span>
+                                    <a href="{{ model.add_url }}" id="last2" class="btn btn-theme04 fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
+                                  </div>
+                                </div>
+
+                              </div>
+                            {% elif field.field.name == "image3" %}
+                              {{ field.label_tag }}
+                              <div class="col-md-9">
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                  <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img class="img3" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="" />
+                                  </div>
+                                  <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                  <div class="parent">
+                                    <span class="btn btn-theme02 btn-file">
+                                      <span class="fileupload-new"><i class="fa fa-paperclip"></i> ajouter autre image</span>
+                                    <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                    {{ field.field }}
+                                    </span>
+                                    <a href="{{ model.add_url }}" id="last3" class="btn btn-theme04 fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
+                                  </div>
+                                </div>
+
+                              </div>
+                            {% elif field.field.name == "images" %}
+                                <style>
+                                    .col-sm-9 label{
+                                        margin-top: 10px;
+                                    }
+                                    #id_nom {
+
+                                    }
+                                </style>
+                              {{ field.label_tag }}
+                              <div class="col-md-9">
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                  <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img class="imgs" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="" />
+                                  </div>
+                                  <div class="fileupload-preview fileupload-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 20px;"></div>
+                                  <div class="parent">
+                                    <span class="btn btn-theme02 btn-file">
+                                      <span class="fileupload-new"><i class="fa fa-paperclip"></i> ajouter autre image</span>
+                                    <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                    {{ field.field }}
+                                    </span>
+                                    <a href="{{ model.add_url }}" id="lasts" class="btn btn-theme04 fileupload-exists" data-dismiss="fileupload"><i class="fa fa-trash-o"></i> Remove</a>
+                                  </div>
+                                </div>
+
+                              </div>
+
+
+
+                            {% else %}
+                                <div class="col-sm-9">
+                                {{ field.label_tag }}
+                                {{ field.field }}
+                                </div>
+
+                            {% endif %}
+                    {% endif %}
+
+                    {% endif %}
+                    {% if field.field.help_text %}
+                        <div class="help"{% if field.field.id_for_label %} id="{{ field.field.id_for_label }}_helptext"{% endif %}>
+                          {{ field.field.help_text|safe }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+    {% endfor %}
+</fieldset>
+
+
