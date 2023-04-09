@@ -210,11 +210,11 @@
         <div class="row px-xl-5 pb-3">
             {% for categorie in categories %}
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
+                <a class="text-decoration-none" href="{% url 'shop_app:shopping_shop' %}?categorie-{{ categorie.id }}=on&price-all=on">
                     <div class="cat-item d-flex align-items-center mb-4">
                         <div class="overflow-hidden" style="width: 100px; height: 100px;">
                             <img class="img-fluid" src="{{ categorie.images.url }}" alt="">
-                        </div>
+                        </div>i
                         <div class="flex-fill pl-3">
                             <h6>{{ categorie.nom }}</h6>
                             <small class="text-body">{{ categorie.article_set.count }} Products</small>
@@ -368,7 +368,7 @@
                             <small class="fa fa-star text-primary mr-1"></small>
                             <small class="fa fa-star text-primary mr-1"></small>
                             <small class="fa fa-star-half text-primary mr-1"></small>
-                            <small style="color:#3636ea">{{ article.id }}</small>
+                            <small style="color:#3636ea">Qualité</small>
                         </div>
                     </div>
                 </div>
