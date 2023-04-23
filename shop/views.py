@@ -175,3 +175,20 @@ def sell(request):
         'categories': Categorie.objects.all(),
     }
     return render(request, 'shop/sell.html', context)
+
+
+def card(request):
+    search = SearchFrom()
+
+    info = MesInformation.objects.get(pk=1)
+
+    context = {
+        'form': search,
+        'mail': info.email,
+        'numero': info.numero_whatsapp,
+        "autre_numero": info.autre_numero,
+        'adresse': info.adresse,
+        'categories': Categorie.objects.all(),
+    }
+
+    return render(request, "shop/card.html", context)

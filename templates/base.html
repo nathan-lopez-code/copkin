@@ -239,7 +239,9 @@
                     <div class="product-img position-relative overflow-hidden">
                         <img class="img-fluid w-100" src="{{ categorie.article_set.last.image1.url }}" alt="">
                         <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                            <a data-id="{{ categorie.article_set.last.id }}" data-name="{{ categorie.article_set.last.nom }}" data-price="{{ categorie.article_set.last.prix }}"
+                               data-image="{{ categorie.article_set.last.image1.url }} " data-url="{{ categorie.article_set.last.get_absolute_url }}" class="add-to-card btn btn-outline-dark btn-square"><i class="fa fa-shopping-cart"></i></a>
+
                             <a class="btn btn-outline-dark btn-square" href="{{ categorie.article_set.last.get_absolute_url }}"><i class="fa fa-info"></i></a>
                             <a class="btn btn-outline-dark btn-square" href="https://api.whatsapp.com/send?phone=243840273593&text=Link%3A%0Ahttps%3A%2F%2Ffb.me%2F5y5SSjINZ%0A%0AI%20saw%20this%20on%20Facebook..."><i class="fa fa-share"></i></a>
                         </div>
@@ -352,7 +354,8 @@
                     <div class="product-img position-relative overflow-hidden">
                         <img class="img-fluid w-100" src="{{ article.image1.url }}" alt="">
                         <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                            <a data-id="{{ article.id }}" data-name="{{ article.nom }}" data-price="{{ article.prix }}"
+                               data-image="{{ article.image1.url }} " data-url="{{ article.get_absolute_url }}" class="add-to-card btn btn-outline-dark btn-square"><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href="{{ article.get_absolute_url }}"><i class="fa fa-info"></i></a>
                             <a class="btn btn-outline-dark btn-square" href="https://api.whatsapp.com/send?phone=243840273593&text=Link%3A%0Ahttps%3A%2F%2Ffb.me%2F5y5SSjINZ%0A%0AI%20saw%20this%20on%20Facebook..."><i class="fa fa-share"></i></a>
                         </div>
@@ -435,6 +438,83 @@
 
 
 {% endblock %}
+
+    <style>
+        .btn-circle {
+          width: 20px;
+          height: 20px;
+          text-align: center;
+          padding: 3px 0;
+          font-size: 10px;
+          line-height: 1.428571429;
+          border-radius: 15px;
+        }
+        .btn-circle.btn-lg {
+          width: 50px;
+          height: 50px;
+          padding: 10px 16px;
+          font-size: 18px;
+          line-height: 1.33;
+          border-radius: 25px;
+        }
+        .btn-circle.btn-xl  {
+          width: 50px;
+          height: 50px;
+          padding: 5px 9px;
+          font-size: 17px;
+          line-height: 1.33;
+          border-radius: 17px;
+        }
+
+        .btn-float{
+            z-index: 3;
+            position: fixed;
+            left: 10px;
+            bottom:50px;
+        }
+
+        .btn-lateral{
+            background-color: #feaf00;
+            color: white;
+            margin: 10px;
+            box-shadow: rgba(0, 0, 0, 0.77) 0px 0px 7px;
+
+        }
+
+        .pop{
+            background-color: #feaf00;
+            color: white;
+            margin: 5px;
+            box-shadow: rgba(0, 0, 0, 0.77) 0 0 7px;
+            border-radius: 0 10px 10px 0;
+            transition-property: all;
+            transition-duration: 5ms;
+        }
+
+
+
+
+    </style>
+
+
+
+    <div class="container">
+        <div class="row">
+              <!--buttons-->
+            <div class="btn-float d-flex">
+                <a href="{% url 'shop_app:card_shop' %}" class="btn btn-default btn-circle btn-xl btn-lateral"><i class="fa fa-shopping-cart"></i> <span id="numberProduct">0</span></a>
+                <div  class="pop pl-1 pr-1 d-none" >
+                    <div class="messagePop text-center"></div>
+                </div>
+
+            </div>
+            <!--fin buttons -->
+
+        </div>
+
+
+
+    </div>
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-secondary mt-5">
         <div class="row px-xl-5">
@@ -497,7 +577,6 @@
     </div>
     <!-- Footer End -->
 
-<div style="background:rgba(2,9,23,0.72)"></div>
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top" style="border-radius: 10px"><i class="fa fa-angle-double-up"></i></a>
 
@@ -514,6 +593,7 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/card.js' %}"></script>
 </body>
 
 
