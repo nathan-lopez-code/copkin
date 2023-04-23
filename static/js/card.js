@@ -80,6 +80,7 @@ let card = new Card();
 let messageCard = document.querySelector(".pop");
 let numberArticle = document.querySelector("#numberProduct");
 let messagePop = document.querySelector(".messagePop");
+let navPanier = document.querySelector("#nav-panier")
 numberArticle.innerHTML = card.getNumberAricle().toString();
 
 
@@ -103,7 +104,8 @@ document.querySelectorAll(".add-to-card").forEach(
             }
             card.addToCard(article);
             numberArticle.innerHTML = card.getNumberAricle().toString();
-            messageCard.classList.remove("d-none")
+            navPanier.innerText = card.getNumberAricle();
+            messageCard.classList.remove("d-none");
             setTimeout(function() {
                 messageCard.classList.add("d-none");
             }, 3000);
@@ -153,6 +155,8 @@ function initState(card, cartContainer){
         }
         let removebtn = document.querySelectorAll("#removebtn")
         let numberArticle = document.querySelector("#numberProduct");
+        let navPanier = document.querySelector("#nav-panier");
+
         removebtn.forEach((btn)=>{
             btn.addEventListener('click', () => {
                 let art = {
@@ -160,6 +164,8 @@ function initState(card, cartContainer){
                 }
                 card.removeProduit(art);
                 numberArticle.innerHTML = card.getNumberAricle().toString();
+                navPanier.innerText = card.getNumberAricle();
+
                 cartContainer.innerHTML = " ";
                 if (card.getNumberAricle() === 0){
                     initPrice(card);
