@@ -21,7 +21,7 @@ def list_categorie(request):
 def list_promotion(request):
 
     return JsonResponse(
-        {'categories': PromotionSerialiser(Promotion.objects.filter(active=True), many=True).data}
+        {'promotions': PromotionSerialiser(Promotion.objects.filter(active=True), many=True).data}
     )
 
 

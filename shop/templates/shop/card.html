@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block main %}
 <section class="h-100 h-custom" style="background-color: #eee;">
   <div class="container py-5 h-100">
@@ -21,11 +23,8 @@
                     <p class="mb-0 NumberAricle">vous avez <strong id="numberArticle">0</strong> articles dans votre panier</p>
                   </div>
                 </div>
-                <div class="col-lg-7" id="cartContainer">
-
+                <div id="cartContainer">
                 </div>
-
-
 
               </div>
               <div class="col-lg-5">
@@ -39,13 +38,9 @@
                       <p class="mb-2">Total</p>
                       <p class="mb-2" id="total"></p>
                     </div>
-
-
-
-                    <button type="button" class="btn btn-block btn-lg" style="background: #6aa3e1; border-radius: 5px; color: yellow">
-                      <div class="d-flex justify-content-between">
-                        <span>Commander maintenant<i class="fas fa-long-arrow-alt-right ms-2"></i></span>
-                      </div>
+                    {% csrf_token %}
+                    <button type="submit" id="btn-card" class="btn btn-block btn-lg" style="background: #6aa3e1; border-radius: 5px; color: yellow">
+                        <span>Commander maintenant <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
                     </button>
 
                   </div>

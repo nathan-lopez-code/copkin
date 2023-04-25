@@ -1,1 +1,11 @@
 {% extends "base.html" %}
+
+{% block title %} combinate {% endblock %}
+{% block meta-data %}
+    <meta property="og:title" content="{{ article.nom }}"/>
+    <meta property="og:image" content="{{ article.image1.url }}"/>
+    <meta property=’og:description’ content='{{ article.description }}'/>
+    <meta property=’og:url’ content='{{ article.get_absolute_url }}'/>
+    <meta property='og:image:width' content='1200' />
+    <meta property='og:image:height' content='627' />
+{% endblock %}

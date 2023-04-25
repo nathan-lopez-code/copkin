@@ -10,7 +10,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content=" site d'achat et de vente en ligne à kinshasha et partout en rdc" name="keywords">
     <meta content="site d'achat et de vente en ligne à kinshasha et partout en rdc" name="description">
-
+    {% block meta-data %} {% endblock %}
     <!-- Favicon -->
     <link href="{% static 'img/favicon.ico' %}" rel="icon">
 
@@ -595,6 +595,8 @@
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/card.js' %}"></script>
+    {% block additional_style %}
+    {% endblock %}
 </body>
 
 

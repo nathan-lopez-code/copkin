@@ -1,4 +1,7 @@
-from django.shortcuts import render
+import json
+from django.http.response import JsonResponse
+
+from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 from .forms import SearchFrom
 from manage.models import Categorie, Article, Promotion, MesInformation
@@ -101,7 +104,6 @@ def shopping(request):
     })
 
 
-
 def detail(request, pk):
 
     info = MesInformation.objects.get(pk=1)
@@ -192,3 +194,36 @@ def card(request):
     }
 
     return render(request, "shop/card.html", context)
+
+
+def cardBuy(request):
+
+
+
+#     from PIL import Image
+#
+#     imagePlage = Image.open("plage.jpg")
+#     imageChat = Image.open("chat.jpg")
+#
+#     imagePlage = imagePlage.convert("RGBA")
+#     imageChat = imageChat.convert("RGBA")
+#
+#     imagePlage.alpha_composite(imageChat, dest=(0, 0))
+#
+#     imagePlage.save("result.png")
+#     imagePlage.show()
+#     return render(request, "shop/confirm_commade.html", None)
+
+    #return redirect("https://google.com")
+
+    data = "no data"
+
+    if request.POST:
+        jsonData = json.loads(request.body)
+
+        cardITem = jsonData.get("cardItem")
+        data = cardITem
+        return JsonResponse({"data": data})
+
+    return HttpResponse(data)
+

@@ -57,67 +57,7 @@ class Card{
         return total
     }
 
-
 }
-
-
-class Article{
-    constructor(id, nom,prix, quantity, imageurl, url ) {
-        this.id = id;
-        this.nom = nom;
-        this.prix = prix;
-        this.quantity = quantity;
-        this.image = imageurl;
-        this.url = url;
-    }
-}
-
-
-
-(function (){
-
-let card = new Card();
-let messageCard = document.querySelector(".pop");
-let numberArticle = document.querySelector("#numberProduct");
-let messagePop = document.querySelector(".messagePop");
-let navPanier = document.querySelector("#nav-panier")
-numberArticle.innerHTML = card.getNumberAricle().toString();
-
-
-document.querySelectorAll(".add-to-card").forEach(
-    (button)=>{
-        button.addEventListener("click", ()=>{
-            let article = {
-                "id" : button.getAttribute('data-id'),
-                "name" : button.getAttribute('data-name'),
-                "price" : button.getAttribute('data-price'),
-                "quantity" : 1,
-                "image" : button.getAttribute('data-image'),
-                "url" : button.getAttribute('data-url')
-            }
-            let articleCard = card.checkArticle(article)
-            if (articleCard === undefined){
-                messagePop.innerHTML = "vous avez ajouter <strong>" + article['name'] + "</strong> au pannier"
-
-            } else{
-                messagePop.innerHTML = "quantité pour <strong>" + article['name'] + "</strong> mise à jour"
-            }
-            card.addToCard(article);
-            numberArticle.innerHTML = card.getNumberAricle().toString();
-            navPanier.innerText = card.getNumberAricle();
-            messageCard.classList.remove("d-none");
-            setTimeout(function() {
-                messageCard.classList.add("d-none");
-            }, 3000);
-
-        })
-    }
-)
-
-
-
-
-})();
 
 function initState(card, cartContainer){
     let article = [];
@@ -150,7 +90,12 @@ function initState(card, cartContainer){
 '                   </div>'+
 '                 </div>'+
 '               </div>';
-                cartContainer.innerHTML += cardItem_;
+                try{
+                    cartContainer.innerHTML += cardItem_;
+                } catch (e) {
+
+                }
+
 
         }
         let removebtn = document.querySelectorAll("#removebtn")
@@ -205,14 +150,108 @@ function initPrice(card){
 
 }
 
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+async function postCard(cardData){
+    let origin = window.location.origin
+    let xmlhttp = new XMLHttpRequest()
+
+    try{
+      xmlhttp.open("POST", origin + '/sellPanier')
+      xmlhttp.setRequestHeader( "X-CSRFToken", getCookie("csrftoken"));
+
+      xmlhttp.send(JSON.stringify(cardData))
+        
+    } catch (error) {
+        console.error("Error;", error);
+    }
+}
+
+
+(function (){
+
+    let card = new Card();
+    let messageCard = document.querySelector(".pop");
+    let numberArticle = document.querySelector("#numberProduct");
+    let messagePop = document.querySelector(".messagePop");
+    let navPanier = document.querySelector("#nav-panier")
+    numberArticle.innerHTML = card.getNumberAricle().toString();
+
+
+    document.querySelectorAll(".add-to-card").forEach(
+        (button)=>{
+            button.addEventListener("click", ()=>{
+                let article = {
+                    "id" : button.getAttribute('data-id'),
+                    "name" : button.getAttribute('data-name'),
+                    "price" : button.getAttribute('data-price'),
+                    "quantity" : 1,
+                    "image" : button.getAttribute('data-image'),
+                    "url" : button.getAttribute('data-url')
+                }
+                let articleCard = card.checkArticle(article)
+                if (articleCard === undefined){
+                    messagePop.innerHTML = "vous avez ajouter <strong>" + article['name'] + "</strong> au pannier"
+
+                } else{
+                    messagePop.innerHTML = "quantité pour <strong>" + article['name'] + "</strong> mise à jour"
+                }
+                card.addToCard(article);
+                numberArticle.innerHTML = card.getNumberAricle().toString();
+                navPanier.innerText = card.getNumberAricle();
+                messageCard.classList.remove("d-none");
+                setTimeout(function() {
+                    messageCard.classList.add("d-none");
+                }, 3000);
+
+            })
+        }
+    )
+
+})();
+
 
 (function(){
 
     let card = new Card();
-    let cartContainer = document.querySelector("#cartContainer");
+    try{
+        let cartContainer = document.querySelector("#cartContainer");
+        initState(card, cartContainer)
+    } catch (e) {
 
-    initState(card, cartContainer)
+    }
+
+})();
 
 
-})()
+(function(){
+    let card = new Card();
+    let cardData = card.card;
+    try {
+        let btnCard = document.querySelector("#btn-card");
+
+        btnCard.addEventListener("click", ()=>{
+            postCard(cardData);
+        })
+    } catch (e) {
+        
+    }
+
+})();
+
 
