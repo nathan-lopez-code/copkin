@@ -24,13 +24,13 @@
 {% block main %}
 
 <!-- Page Header Start -->
-<div class="container-fluid bg-secondary mb-5">
+<div class="container-fluid bg-secondary">
     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
         <h1 class="font-weight-semi-bold text-uppercase mb-3">Produit detail</h1>
         <div class="d-inline-flex">
             <p class="m-0"><a href="">Accueil</a></p>
             <p class="m-0 px-2">-</p>
-            <p class="m-0">{{ article.nom }}</p>
+            <p class="m-0 font-weight-bold">{{ article.nom }}</p>
         </div>
     </div>
 </div>
@@ -43,20 +43,20 @@
         <div class="col-lg-5 pb-5">
             <div id="product-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner border">
-                    <div class="carousel-item active">
-                        <img class="w-100 h-100" src="{{ article.image1.url }}" alt="Image">
+                    <div class="carousel-item active" style="height:400px; align-content: center; ">
+                        <img class="h-100" style="width: auto; margin-left: auto; display: block; margin-right: auto " src="{{ article.image1.url }}" alt="Image">
                     </div>
+
                     {% if article.image2 %}
-                    <div class="carousel-item">
-                        <img class="w-100 h-100" src="{{ article.image2.url }}" alt="Image">
+                    <div class="carousel-item" style="height:400px; align-content: center; ">
+                        <img class="h-100" style="width: auto; margin-left: auto; display: block; margin-right: auto "src="{{ article.image2.url }}" alt="Image">
                     </div>
                     {% endif %}
                     {% if article.image3 %}
-                    <div class="carousel-item">
-                        <img class="w-100 h-100" src="{{ article.image3.url }}" alt="Image">
+                    <div class="carousel-item" style="height:400px; align-content: center; ">
+                        <img class="h-100" style="width: auto; margin-left: auto; display: block; margin-right: auto "  src="{{ article.image3.url }}" alt="Image">
                     </div>
                     {% endif %}
-
                 </div>
                 <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                     <i class="fa fa-2x fa-angle-left text-dark"></i>
@@ -76,6 +76,7 @@
                     <small class="fas fa-star"></small>
                     <small class="fas fa-star"></small>
                     <small class="far fa-star-half"></small>
+                    <span style="color: #317fe7">(Produit de qualite)</span>
                 </div>
             </div>
             <div class="d-flex justify-content-between mb-3">
@@ -83,34 +84,43 @@
               <h3 class=" btn btn-primary font-weight-semi-bold ">Promotion : ${{ article.prix|spromo:ppromo }}.00</h3>
 
             {% else %}
-                <h3 class="font-weight-semi-bold ">${{ article.prix }}.00</h3>
+            <div class="d-flex justify-content-center align-items-center">
+                <span> prix :</span> <h3 class="font-weight-semi-bold d-inline">${{ article.prix }}.00</h3>
+            </div>
 
             {% endif %}
-                <a href="https://wa.me/" class="btn btn-primary" style="background: #1a45ef!important; color: white!important;">
-                    <i class="fas fa-shopping-cart"> </i> Commander maintenant
-                </a>
+            <a data-id="{{ article.id }}" data-name="{{ article.nom }}" data-price="{{ article.prix }}" data-image="{{ article.image1.url }} " data-url="{{ article.get_absolute_url }}"
+               class="btn btn-primary add-to-card" style ="background: #ffb600!important; color: white!important; border-radius: 10px;">
+                <i class="fa fa-cart-plus"> </i> ajouter au pannier
+            </a>
             </div>
             <p class="mb-4">{{ article.description }}</p>
+            <hr>
 
+            <a href="https://wa.me/{{ numero }}" class="btn btn-primary w-100 mt-3 mb-2" style="background: #4f6ce3!important; color: white!important; border-radius: 10px">
+                    <i class="fas fa-shopping-bag"> </i> Commander maintenant
+            </a>
+            <hr>
             <div class="d-flex pt-2">
-                <p class="text-dark font-weight-medium mb-0 mr-2">partager sur:</p>
-                <div class="d-inline-flex">
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-facebook-f fa-2x"></i>
+                <p class="text-dark font-weight-medium mb-0 mr-2">Cet article vous plait ? Alors partagez le:</p>
+                <div class="d-flex justify-content-between">
+                    <a class="text-dark px-2" style="padding: 5px; background: #feaf00; color: #0e2e42; margin-left: 5px; border-radius: 5px" href="">
+                        <i class="fab fa-facebook-f "></i>
                     </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-whatsapp fa-2x"></i>
+                    <a class="text-dark px-2" style="padding: 5px; background: #feaf00; color: #0e2e42; margin-left: 5px; border-radius: 5px" href="">
+                        <i class="fab fa-whatsapp"></i>
                     </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-instagram fa-2x"></i>
+                    <a class="text-dark px-2" style="padding: 5px; background: #feaf00; color: #0e2e42; margin-left: 5px; border-radius: 5px" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-dark px-2" style="padding: 5px; background: #feaf00; color: #0e2e42; margin-left: 5px; border-radius: 5px" href="">
+                        <i class="fab fa-twitter"></i>
                     </a>
 
                 </div>
 
             </div>
-            <a href="https://wa.me/" class="btn btn-primary w-100 mt-4 mb-2" style="background: #4f6ce3!important; color: white!important; ">
-                    <i class="fas fa-shopping-cart"> </i> Commander maintenant
-            </a>
+
         </div>
     </div>
     <div class="row px-xl-5">
@@ -171,8 +181,8 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="{{ art.get_absolute_url }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>plus d'information</a>
-                        <a href="https://wa.me/" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Commander</a>
+                        <a href="{{ art.get_absolute_url }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Voir l'article</a>
+                        <a data-id="{{ art.id }}" data-name="{{ art.nom }}" data-price="{{ art.prix }}" data-image="{{ art.image1.url }} " data-url="{{ art.get_absolute_url }}" class="add-to-card btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Ajouter au panier</a>
                     </div>
                 </div>
                 {% endfor %}
@@ -203,9 +213,10 @@
                             <h6>${{ art.prix }}.00</h6><h6 class="text-muted ml-2"><del>${{ art.prix|reduction }}</del></h6>
                         </div>
                     </div>
+
                     <div class="card-footer d-flex justify-content-between bg-light border">
-                        <a href="{{ art.get_absolute_url }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>plus d'information</a>
-                        <a href="https://wa.me/" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Commander</a>
+                        <a href="{{ art.get_absolute_url }}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>Voir l'article</a>
+                        <a data-id="{{ art.id }}" data-name="{{ art.nom }}" data-price="{{ art.prix }}" data-image="{{ art.image1.url }} " data-url="{{ art.get_absolute_url }}" class="add-to-card  btn btn-sm text-dark p-0"><i class="fa fa-cart-plus text-primary mr-1"></i>Ajouter au panier</a>
                     </div>
                 </div>
                 {% endfor %}
@@ -228,8 +239,10 @@
                         <img class="img-fluid" src="{{ promo.produit.image1.url }}" alt="">
                         <div class="offer-text">
                             <h6 class="text-white text-uppercase">{{ promo.nom }}</h6>
-                            <h3 class="text-white mb-3 text-center">profiter de {{ promo.pourcent }} % de reduction <br> sur {{ promo.produit.nom }}</h3>
-                            <h5 style="color: #2d2dd3; background: rgba(255,255,255,0.66); border-radius: 5px; padding: 3px">${{ promo.produit.prix|spromo:promo.pourcent }}.00</h5><h6 style="background: rgba(245,72,72,0.81); padding: 4px; color: white" class="ml-2"><del>${{ promo.produit.prix }}.00</del></h6>
+                            <h3 class="text-white mb-3 text-center">profiter de {{ promo.pourcent }} % de reduction
+                                <br> sur {{ promo.produit.nom }}</h3>
+                            <h5 style="color: #2d2dd3; background: rgba(255,255,255,0.66); border-radius: 5px; padding: 3px">${{ promo.produit.prix|spromo:promo.pourcent }}.00</h5><h6 style="background: rgba(245,72,72,0.81); padding: 4px; color: white"
+                                                                                                                                                                                        class="ml-2"><del>${{ promo.produit.prix }}.00</del></h6>
                             <a href="{{ promo.produit.get_absolute_url }}" class="btn btn-primary">Profitez maintenant</a>
                         </div>
                     </div>

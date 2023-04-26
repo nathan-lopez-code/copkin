@@ -7,15 +7,13 @@ class Card{
             this.card = JSON.parse(this.card)
         }
     }
-
     save(){
         localStorage.setItem("card", JSON.stringify(this.card));
     }
-
     addToCard(article){
         let foundArticle = this.card.find(a => a.id === article.id);
         if (foundArticle !== undefined){
-            foundArticle.quantity++;
+            foundArticle.quatity++;
         }else{
             article.quatity = 1;
             this.card.push(article)
@@ -43,20 +41,15 @@ class Card{
     }
 
     getNumberAricle(){
-        let number = 0;
-        for (let article of this.card){
-            number += article.quatity;
-        }
-        return number;
+        return this.card.length;
     }
     getTotalPrice(){
         let total = 0;
         for (let article of this.card) {
             total += article.quatity * article.price;
         }
-        return total
+        return total;
     }
-
 }
 
 function initState(card, cartContainer){
@@ -92,11 +85,7 @@ function initState(card, cartContainer){
 '               </div>';
                 try{
                     cartContainer.innerHTML += cardItem_;
-                } catch (e) {
-
-                }
-
-
+                } catch (e) {}
         }
         let removebtn = document.querySelectorAll("#removebtn")
         let numberArticle = document.querySelector("#numberProduct");
@@ -121,18 +110,13 @@ function initState(card, cartContainer){
         })
         initPrice(card)
 
-
     } else {
         let html = document.createElement('div');
         try{
             document.querySelector(".NumberAricle").style.display = "none";
             html.innerHTML = ' <div class="card mb-3"> <p class="text-center"> Aucun article dans le panier, veillez en ajouter</p> </div>';
             cartContainer.appendChild(html)
-        } catch (e) {
-
-        }
-
-
+        } catch (e) {}
     }
 }
 
@@ -166,7 +150,6 @@ function getCookie(name) {
     return cookieValue;
 }
 
-
 async function postCard(cardData){
     let origin = window.location.origin
     let xmlhttp = new XMLHttpRequest()
@@ -174,24 +157,20 @@ async function postCard(cardData){
     try{
       xmlhttp.open("POST", origin + '/sellPanier')
       xmlhttp.setRequestHeader( "X-CSRFToken", getCookie("csrftoken"));
-
       xmlhttp.send(JSON.stringify(cardData))
-        
     } catch (error) {
         console.error("Error;", error);
     }
 }
 
-
 (function (){
-
     let card = new Card();
     let messageCard = document.querySelector(".pop");
     let numberArticle = document.querySelector("#numberProduct");
     let messagePop = document.querySelector(".messagePop");
-    let navPanier = document.querySelector("#nav-panier")
+    let navPanier = document.querySelector("#nav-panier");
     numberArticle.innerHTML = card.getNumberAricle().toString();
-
+    navPanier.innerHTML = card.getNumberAricle().toString();
 
     document.querySelectorAll(".add-to-card").forEach(
         (button)=>{
@@ -200,7 +179,6 @@ async function postCard(cardData){
                     "id" : button.getAttribute('data-id'),
                     "name" : button.getAttribute('data-name'),
                     "price" : button.getAttribute('data-price'),
-                    "quantity" : 1,
                     "image" : button.getAttribute('data-image'),
                     "url" : button.getAttribute('data-url')
                 }
@@ -209,11 +187,11 @@ async function postCard(cardData){
                     messagePop.innerHTML = "vous avez ajouter <strong>" + article['name'] + "</strong> au pannier"
 
                 } else{
-                    messagePop.innerHTML = "quantité pour <strong>" + article['name'] + "</strong> mise à jour"
+                    messagePop.innerHTML = "quantité pour <strong>" + article['name'] + "</strong> mise à jour";
                 }
                 card.addToCard(article);
                 numberArticle.innerHTML = card.getNumberAricle().toString();
-                navPanier.innerText = card.getNumberAricle();
+                navPanier.innerHTML = card.getNumberAricle().toString();
                 messageCard.classList.remove("d-none");
                 setTimeout(function() {
                     messageCard.classList.add("d-none");
@@ -224,7 +202,6 @@ async function postCard(cardData){
     )
 
 })();
-
 
 (function(){
 
@@ -238,7 +215,6 @@ async function postCard(cardData){
 
 })();
 
-
 (function(){
     let card = new Card();
     let cardData = card.card;
@@ -248,10 +224,6 @@ async function postCard(cardData){
         btnCard.addEventListener("click", ()=>{
             postCard(cardData);
         })
-    } catch (e) {
-        
-    }
+    } catch (e) {}
 
 })();
-
-

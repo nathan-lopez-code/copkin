@@ -32,35 +32,34 @@ Resultat de de recherche pour : {{ key }}
 
 
             <!-- Shop Product Start -->
-            <div class="col-lg-9 col-md-8">
+            <div class="col-lg-10 col-md-12">
                 <div class="row pb-3">
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
 
-                            <form action="{% url 'shop_app:search' %}" method="get">
+                            <form class="w-75" action="{% url 'shop_app:search' %}" method="get">
                                 {% csrf_token %}
                                 <div class="input-group">
                                     {{ form.nom }}
-                                    <div class="input-group-append">
-                                        <input value="Rechercher" type="submit" class="btn btn-primary">
+                                    <div class="input-group-append" >
+                                        <input value="Rechercher" type="submit" class="btn btn-primary" style="border-radius: 0 10px 10px 0">
                                     </div>
                                 </div>
                             </form>
                             <div class="ml-2">
-                                <a href="{% url 'shop_app:shopping_shop' %}" class="btn btn-dark">Voit tout nos produits</a>
+                                <a href="{% url 'shop_app:shopping_shop' %}" style="border-radius: 10px" class="btn btn-dark">Voit tout nos produits</a>
                             </div>
                         </div>
                     </div>
                     {% for article in page_obj %}
-                         <div class="col-lg-3 col-md-4 col-sm-6 pb-1" >
+                         <div class="col-lg-3 col-md-4 col-sm-5 pb-1">
                             <div class="product-item bg-light mb-4">
                                 <div class="product-img position-relative overflow-hidden">
                                     <img class="img-fluid w-100" src="{{ article.image1.url }}" alt="">
                                     <div class="product-action">
                                         <a data-id="{{ article.id }}" data-name="{{ article.nom }}" data-price="{{ article.prix }}"
-                               data-image="{{ article.image1.url }} " data-url="{{ article.get_absolute_url }}" class="add-to-card btn btn-outline-dark btn-square"><i class="fa fa-shopping-cart"></i></a>
+                               data-image="{{ article.image1.url }} " data-url="{{ article.get_absolute_url }}" class="add-to-card btn btn-outline-dark btn-square"><i class="fa fa-cart-plus"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href="{{ article.get_absolute_url }}"><i class="fa fa-info"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href="https://api.whatsapp.com/send?phone=243840273593&text=Link%3A%0Ahttps%3A%2F%2Ffb.me%2F5y5SSjINZ%0A%0AI%20saw%20this%20on%20Facebook..."><i class="fa fa-share"></i></a>
                                     </div>
                                 </div>
                                 <div class="text-center py-4">

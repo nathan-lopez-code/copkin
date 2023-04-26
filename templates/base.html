@@ -110,7 +110,7 @@
                                 </div>
                             </div>
                             <a href="{% url 'shop_app:contact_shop' %}" class="nav-item nav-link {% block contact %}{% endblock %}">Contact</a>
-                            <a href="{% url 'shop_app:card_shop' %}" class="nav-item nav-link {% block panier %}{% endblock %}">Panier(<span id="nav-panier">0</span>)</a>
+                            <a href="{% url 'shop_app:card_shop' %}" class="nav-item nav-link {% block panier %}{% endblock %}">Panier(<span id="nav-panier"></span>)</a>
                             <br>
                             <a href="{% url 'shop_app:sell_shop' %}" class="nav-item nav-link {% block sell %}{% endblock %}">vendez avec nous</a>
                         </div>
@@ -241,10 +241,8 @@
                         <img class="img-fluid w-100" src="{{ categorie.article_set.last.image1.url }}" alt="">
                         <div class="product-action">
                             <a data-id="{{ categorie.article_set.last.id }}" data-name="{{ categorie.article_set.last.nom }}" data-price="{{ categorie.article_set.last.prix }}"
-                               data-image="{{ categorie.article_set.last.image1.url }} " data-url="{{ categorie.article_set.last.get_absolute_url }}" class="add-to-card btn btn-outline-dark btn-square"><i class="fa fa-shopping-cart"></i></a>
-
+                               data-image="{{ categorie.article_set.last.image1.url }} " data-url="{{ categorie.article_set.last.get_absolute_url }}" class="add-to-card btn btn-outline-dark btn-square"><i class="fa fa-cart-plus"></i></a>
                             <a class="btn btn-outline-dark btn-square" href="{{ categorie.article_set.last.get_absolute_url }}"><i class="fa fa-info"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href="https://api.whatsapp.com/send?phone=243840273593&text=Link%3A%0Ahttps%3A%2F%2Ffb.me%2F5y5SSjINZ%0A%0AI%20saw%20this%20on%20Facebook..."><i class="fa fa-share"></i></a>
                         </div>
                     </div>
                     <div class="text-center py-4">
@@ -356,9 +354,8 @@
                         <img class="img-fluid w-100" src="{{ article.image1.url }}" alt="">
                         <div class="product-action">
                             <a data-id="{{ article.id }}" data-name="{{ article.nom }}" data-price="{{ article.prix }}"
-                               data-image="{{ article.image1.url }} " data-url="{{ article.get_absolute_url }}" class="add-to-card btn btn-outline-dark btn-square"><i class="fa fa-shopping-cart"></i></a>
+                               data-image="{{ article.image1.url }} " data-url="{{ article.get_absolute_url }}" class="add-to-card btn btn-outline-dark btn-square"><i class="fa fa-cart-plus"></i></a>
                             <a class="btn btn-outline-dark btn-square" href="{{ article.get_absolute_url }}"><i class="fa fa-info"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href="https://api.whatsapp.com/send?phone=243840273593&text=Link%3A%0Ahttps%3A%2F%2Ffb.me%2F5y5SSjINZ%0A%0AI%20saw%20this%20on%20Facebook..."><i class="fa fa-share"></i></a>
                         </div>
                     </div>
                     <div class="text-center py-4">
@@ -560,8 +557,8 @@
                     <div class="col-md-4 mb-5 pt-4" >
                         <h6 class="text-secondary text-uppercase mb-3">Suive nous</h6>
                         <div class="d-flex">
-                            <a class="btn btn-primary btn-square mr-2" href=""><i class="fab fa-whatsapp"></i></a>
-                            <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-primary btn-square mr-2" href="https://wa.me/{{ numero }}"><i class="fab fa-whatsapp"></i></a>
+                            <a class="btn btn-primary btn-square mr-2" href="https://web.facebook.com/copkin2021"><i class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
