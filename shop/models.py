@@ -1,3 +1,7 @@
 from django.db import models
+from manage.models import Article
 
-# Create your models here.
+
+class CardModel(models.Model):
+    date = models.DateField(auto_now=True)
+    message = models.TextField(max_length=500000,)

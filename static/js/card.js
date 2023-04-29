@@ -152,15 +152,21 @@ function getCookie(name) {
 
 async function postCard(cardData){
     let origin = window.location.origin
-    let xmlhttp = new XMLHttpRequest()
 
-    try{
-      xmlhttp.open("POST", origin + '/sellPanier')
-      xmlhttp.setRequestHeader( "X-CSRFToken", getCookie("csrftoken"));
-      xmlhttp.send(JSON.stringify(cardData))
-    } catch (error) {
-        console.error("Error;", error);
-    }
+    fetch(origin + "/sellPanier", {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers:{
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest', //Necessary to work with request.is_ajax()
+            'X-CSRFToken': getCookie('csrftoken'),
+    },
+        body: JSON.stringify(cardData) //JavaScript object of data to POST
+    })
+    .then(response => {
+            console.log(response.json());
+            window.location.href = origin + "/sellPanier"//Convert response to JSON
+    })
 }
 
 (function (){
@@ -218,12 +224,29 @@ async function postCard(cardData){
 (function(){
     let card = new Card();
     let cardData = card.card;
+    let idList = '{ "cardItem" : [' ;
     try {
         let btnCard = document.querySelector("#btn-card");
+        let i = 1;
+        for (let article of cardData){
+            if(i === cardData.length){
+                idList += '{"id":"' + article.id + '", "nom":"'+ article.name +'", "quatity":"'+ article.quatity +'"}';
+            }else{
+                idList += '{"id":"' + article.id + '", "nom":"'+ article.name +'", "quatity":"'+ article.quatity +'"},'
+            }
+            i++;
+        }
+        idList += '] }';
 
         btnCard.addEventListener("click", ()=>{
-            postCard(cardData);
+            if (idList.length !== 0){
+                postCard(JSON.parse(idList));
+            }else{
+                alert("vous ne pouvez commander tant que le panier est vide");
+            }
         })
-    } catch (e) {}
+    } catch (e) {
+        console.log("nous sommes sur une autre page");
+    }
 
 })();

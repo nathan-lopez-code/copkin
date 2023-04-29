@@ -1,6 +1,7 @@
 import json
+import urllib
 from django.http.response import JsonResponse
-
+from .models import CardModel
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 from .forms import SearchFrom
@@ -197,32 +198,17 @@ def card(request):
 
 
 def cardBuy(request):
+    info = MesInformation.objects.get(pk=1)
 
-
-
-#     from PIL import Image
-#
-#     imagePlage = Image.open("plage.jpg")
-#     imageChat = Image.open("chat.jpg")
-#
-#     imagePlage = imagePlage.convert("RGBA")
-#     imageChat = imageChat.convert("RGBA")
-#
-#     imagePlage.alpha_composite(imageChat, dest=(0, 0))
-#
-#     imagePlage.save("result.png")
-#     imagePlage.show()
-#     return render(request, "shop/confirm_commade.html", None)
-
-    #return redirect("https://google.com")
-
-    data = "no data"
-
-    if request.POST:
-        jsonData = json.loads(request.body)
-
-        cardITem = jsonData.get("cardItem")
-        data = cardITem
-        return JsonResponse({"data": data})
-
-    return HttpResponse(data)
+    if request.method == "POST":
+        data = json.load(request)['cardItem']
+        cartItem = CardModel()
+        text = " NOUVELLE COMMANDE : "
+        for article in data:
+            text += f'\n {article["quatity"]} {article["nom"]}'
+            cartItem.message = text
+            cartItem.save()
+        return JsonResponse(data, safe=False)
+    elif request.method == "GET":
+        message = CardModel.objects.last().message
+        return redirect(f"https://wa.me/{info.numero_whatsapp}?text={urllib.parse.quote(message)}")
