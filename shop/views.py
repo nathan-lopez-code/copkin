@@ -226,4 +226,3 @@ def cardBuy(request):
         return JsonResponse({"data": data})
 
     return HttpResponse(data)
-
