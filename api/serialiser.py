@@ -33,3 +33,11 @@ class PromotionSerialiser(s.Serializer):
     pourcent = s.IntegerField()
     date_de_creation = s.DateTimeField()
 
+
+class MesinformationSerialiser(s.Serializer):
+    id = s.IntegerField(read_only=True)
+    nom_du_site = s.CharField(max_length=30)
+    numero_whatsapp = s.CharField(max_length=16)
+    autre_numero = s.CharField(max_length=16)
+    adresse = s.CharField(max_length=200)
+    email = s.EmailField()

@@ -1,12 +1,20 @@
 from django.http.response import JsonResponse
-from manage.models import Promotion, Article, Categorie
-from .serialiser import PromotionSerialiser, ArticleSerialiser, CategorieSerialiser
+from manage.models import Promotion, Article, Categorie, MesInformation
+from .serialiser import PromotionSerialiser, ArticleSerialiser, CategorieSerialiser, MesinformationSerialiser
 
 
 def list_article(request):
 
     reponse = {
         'articles': ArticleSerialiser(Article.objects.all(), many=True).data,
+    }
+    return JsonResponse(reponse)
+
+
+def mes_informatiion(request):
+
+    reponse = {
+        'info': MesinformationSerialiser(MesInformation.objects.get(pk=1), many=True).data,
     }
     return JsonResponse(reponse)
 
