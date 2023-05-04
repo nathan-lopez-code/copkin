@@ -14,7 +14,7 @@ def list_article(request):
 def mes_informatiion(request):
 
     reponse = {
-        'info': MesinformationSerialiser(MesInformation.objects.get(pk=1), many=True).data,
+        'info': MesinformationSerialiser(MesInformation.objects.all(), many=True).data,
     }
     return JsonResponse(reponse)
 
