@@ -105,16 +105,16 @@
             <div class="d-flex pt-2">
                 <p class="text-dark font-weight-medium mb-0 mr-2">Cet article vous plait ? Alors partagez le:</p>
                 <div class="d-flex justify-content-between">
-                    <a class="text-dark px-2" style="padding: 5px; background: #feaf00; color: #0e2e42; margin-left: 5px; border-radius: 5px" href="https://www.facebook.com/sharer/sharer.php?u={{ request.META.HTTP_HOST }}{{ article.get_absolute_url }}">
+                    <a class="text-dark px-2" style="padding: 5px; background: #feaf00; color: #0e2e42; margin-left: 5px; border-radius: 5px" href="https://www.facebook.com/sharer/sharer.php?u=http://{{ request.META.HTTP_HOST }}{{ article.get_absolute_url }}" target="_blank" >
                         <i class="fab fa-facebook-f "></i>
                     </a>
-                    <a class="text-dark px-2" style="padding: 5px; background: #feaf00; color: #0e2e42; margin-left: 5px; border-radius: 5px" href="https://wa.me/?text=Copkin%20%5Cn%20{{ request.META.HTTP_HOST }}{{ article.get_absolute_url }}">
+                    <a class="text-dark px-2" style="padding: 5px; background: #feaf00; color: #0e2e42; margin-left: 5px; border-radius: 5px" href="https://wa.me/?text=http://{{ request.META.HTTP_HOST }}{{ article.get_absolute_url }}" target="_blank" >
                         <i class="fab fa-whatsapp"></i>
                     </a>
-                    <a class="text-dark px-2" style="padding: 5px; background: #feaf00; color: #0e2e42; margin-left: 5px; border-radius: 5px" href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.META.HTTP_HOST }}{{ article.get_absolute_url }}">
+                    <a class="text-dark px-2" style="padding: 5px; background: #feaf00; color: #0e2e42; margin-left: 5px; border-radius: 5px" href="https://www.linkedin.com/sharing/share-offsite/?url=http://{{ request.META.HTTP_HOST }}{{ article.get_absolute_url }}" target="_blank" >
                         <i class="fab fa-linkedin"></i>
                     </a>
-                    <a class="text-dark px-2" style="padding: 5px; background: #feaf00; color: #0e2e42; margin-left: 5px; border-radius: 5px" href="https://twitter.com/intent/tweet?text=copkin%20&url={{ request.META.HTTP_HOST }}{{ article.get_absolute_url }}">
+                    <a class="text-dark px-2" style="padding: 5px; background: #feaf00; color: #0e2e42; margin-left: 5px; border-radius: 5px" href="https://twitter.com/intent/tweet?text=copkin%20&url=http://{{ request.META.HTTP_HOST }}{{ article.get_absolute_url }}" target="_blank" >
                         <i class="fab fa-twitter"></i>
                     </a>
 
